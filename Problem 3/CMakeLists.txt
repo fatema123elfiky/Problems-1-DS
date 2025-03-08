@@ -3,4 +3,8 @@ project(Problem_3)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(Problem_3 main.cpp)
+add_executable(Problem_3 main.cpp
+        SortedLinkedList/SortedLinkedList.h
+        SortedLinkedList/SortedLinkedList.cpp
+        SortedLinkedList/Node/Node.h
+        SortedLinkedList/Node/Node.cpp)
