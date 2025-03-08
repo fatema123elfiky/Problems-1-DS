@@ -14,7 +14,7 @@ public:
     }
     Polynomial(int sz)
     {
-        size = sz;
+        size = sz + 2;
         degrees = new int[size];
     }
     ~Polynomial()
@@ -30,7 +30,7 @@ public:
 
     Polynomial operator+(const Polynomial& p)
     {
-        Polynomial res(max(p.size,this->size));
+        Polynomial res(max(p.size,this->size)-2);
         for (int i = 0; i < min(p.size,this->size); ++i)
             res.degrees[i] = this->degrees[i] + p.degrees[i];
         if(this->size > p.size)
@@ -48,7 +48,7 @@ public:
 
     Polynomial operator-(const Polynomial& p)
     {
-        Polynomial res(max(p.size,this->size));
+        Polynomial res(max(p.size,this->size)-2);
         for (int i = 0; i < min(p.size,this->size); ++i)
             res.degrees[i] = this->degrees[i] - p.degrees[i];
         if(this->size > p.size)
@@ -102,14 +102,14 @@ public:
 
 signed main()
 {
-    int sz1 , sz2;
+    int ord1 , ord2;
     cout << "Order of first polynomial:\n";
-    cin >> sz1;
-    Polynomial p1(sz1+2);
+    cin >> ord1;
+    Polynomial p1(ord1);
     p1.inputDegrees();
     cout << "Order of second polynomial:\n";
-    cin >> sz2;
-    Polynomial p2(sz2+2) , p3 , p4;
+    cin >> ord2;
+    Polynomial p2(ord2) , p3 , p4;
     p2.inputDegrees();
     p3 = p1 + p2;
     p4 = p2 - p1;
