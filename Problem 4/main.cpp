@@ -2,6 +2,6 @@
 
 int main(){
     UI Ui;
-   /* template <typename T>
-    while (Ui.start<T>());*/
+
+    while (Ui.start());
 }

@@ -9,7 +9,7 @@
 class UI {
 
 
-    template <typename T>
+public:
     bool start();
 };
 

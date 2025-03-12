@@ -35,7 +35,7 @@ bool isDigit(string number){
 
 
 
-template <typename T>
+
 bool UI::start(){
 
     string Size;
@@ -45,13 +45,29 @@ bool UI::start(){
         cout<<"Please enter a valid number : ",getline(cin,Size);
     int size= stoi(Size);
 
-    SortingSystem<T> sort (size);
+    string text="Enter which data type you want?"
+                "\n1.f\n2.int\n3.string\n4.char"
+                "\n5.ll\nEnter your choice : ";
+    string choices []={"1","2","3","4","5"};
+    string choice = check_menu(text,choices,5);
+
+    if(choice=="1")
+        SortingSystem<float>sort(size);
+    else if(choice=="2")
+        SortingSystem<int>sort(size);
+    else if(choice=="3")
+        SortingSystem<string>sort(size);
+    else if(choice=="4")
+        SortingSystem<char>sort(size);
+    else
+        SortingSystem<long long >sort(size);
 
 
 
-    string text="Do you want to sort another data set ? (y/n): ";
+
+    text="Do you want to sort another data set ? (y/n): ";
     string answers []={"y","n"};
-    string choice = check_menu(text,answers,2);
+    choice = check_menu(text,answers,2);
 
     if(choice=="n")
         return false;

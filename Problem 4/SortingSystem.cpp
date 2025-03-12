@@ -132,3 +132,8 @@ SortingSystem<T>::SortingSystem(int n):size(n) {
 
     viewMenu();
 }
+
+template <typename T>
+SortingSystem<T>::~SortingSystem() {
+    delete [] data ;
+}

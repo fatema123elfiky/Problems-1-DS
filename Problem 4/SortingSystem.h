@@ -23,7 +23,7 @@ private:
 
 public:
     SortingSystem(int n);// done
-    ~SortingSystem();
+    ~SortingSystem();// done
 
     void insertionSort();
     void selectionSort();
