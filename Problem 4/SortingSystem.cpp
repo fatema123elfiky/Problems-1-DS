@@ -22,29 +22,11 @@ string check_menu(const string& menuText ,const string choices[],int size ){
     return currentAnswer;
 }
 
-bool isDigit(string number){
 
-    for(char digit :number)
-        if(!isdigit(digit))
-            return false;
-
-    return true;
-}
 
 
 template<typename T>
 void SortingSystem<T> :: viewMenu(){
-
-    while (true){
-
-        string Size;
-        cout<<"Enter the number of the items : ";
-        getline(cin,Size);
-
-        while (!isDigit(Size))
-            cout<<"Please enter a valid number : ",getline(cin,Size);
-
-        size= stoi(Size);
 
 
         again:
@@ -62,49 +44,66 @@ void SortingSystem<T> :: viewMenu(){
         string choice =check_menu(text,choices,9);
 
 
+
+
+
+        void (SortingSystem<T>::*sortFunc)()= nullptr;
+        void (SortingSystem<T>::*sortFunc_2)(int,int)= nullptr;
+
         if(choice=="1")
-            insertionSort();
+            insertionSort(),sortFunc=&SortingSystem<T>::insertionSort;
+
         else if(choice=="2")
-            selectionSort();
+            selectionSort(),sortFunc=&SortingSystem<T>::selectionSort;
+
         else if(choice=="3")
-            bubbleSort();
+            bubbleSort(),sortFunc=&SortingSystem<T>::bubbleSort;
+
         else if(choice=="4")
-            shellSort();
+            shellSort(),sortFunc=&SortingSystem<T>::shellSort;
+
         else if(choice=="5")
-            mergeSort(0,size-1);
+            mergeSort(0, size - 1),sortFunc_2=&SortingSystem<T>::mergeSort;
+
         else if(choice=="6")
-            quickSort(0,size-1);//~~
+            quickSort(0, size - 1),sortFunc_2=&SortingSystem<T>::quickSort;//~~
+
         else if(choice=="7"){
 
             if constexpr (is_integral_v<T>)
-              countSort();
+                countSort(),sortFunc=&SortingSystem<T>::countSort;
+
             else {
                 cout << "Sorry ,Try again!!\n\n";
                 goto again;
             }
 
-        } else if(choice=="8"){
+        }else if(choice=="8"){
 
             if constexpr (is_integral_v<T>)
-                radixSort();
+                radixSort(),sortFunc=&SortingSystem<T>::radixSort;
+
             else {
                 cout << "Sorry ,Try again!!\n\n";
                 goto again;
             }
 
         }else
-            bubbleSort();
+            bucketSort(),sortFunc=&SortingSystem<T>::bucketSort;
 
 
-       
 
+
+        cout<<"\n\n";
         displayData();
-        measureSortTime();
+
+        if(sortFunc)
+            measureSortTime(sortFunc);
+        else
+            measureSortTime(sortFunc_2);
 
 
 
-
-    }
 
 }
 
@@ -115,4 +114,21 @@ void SortingSystem<T>::displayData() {
     for (int index = 0; index < size-1; ++index)
         cout<<data[index]<<',';
     cout<<data[size-1]<<"]\n";
+}
+
+template <typename T>
+SortingSystem<T>::SortingSystem(int n):size(n) {
+
+    if(n<=0)
+        size=1;
+
+    data=new T[size];
+
+    int counter=0;
+    while (counter<size) {
+        cout << "Enter data " << counter+1 << ": ";
+        cin>>data[counter++];
+    }
+
+    viewMenu();
 }

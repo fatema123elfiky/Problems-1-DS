@@ -22,7 +22,7 @@ private:
 
 
 public:
-    SortingSystem(int n);
+    SortingSystem(int n);// done
     ~SortingSystem();
 
     void insertionSort();
@@ -36,10 +36,10 @@ public:
     void bucketSort();
 
 
-    void displayData();
+    void displayData();//done
     void measureSortTime(void (SortingSystem<T>::*sortFunc) () );
     void measureSortTime(void (SortingSystem<T>::*sortFunc) (int left , int right) );
-    void viewMenu();
+    void viewMenu();//done
 
 };
 
