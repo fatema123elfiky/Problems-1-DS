@@ -11,69 +11,70 @@ void SortedLinkedList::insert(int data){
     if(head == nullptr || head->data >= newNode->data){
         newNode->next = head;
         head = newNode;
-    }
-
-    Node* current = head;
-    while(current-> next != nullptr && current->next->data < newNode->data)
-        current = current->next;
-
-    newNode->next = current->next;
-    current->next = newNode;
-    delete newNode;
-}
-
-void SortedLinkedList::remove(int data){
-    Node* current = head;
-    if(current!= nullptr && current->data == data){
-        head = current->next;
-        delete current;
         return;
     }
 
-    while(current->next != nullptr && current->next->data == data)
-        current = current->next;
+    Node* currentNode = head;
+    while(currentNode-> next != nullptr && currentNode->next->data < newNode->data)
+        currentNode = currentNode->next;
 
-    if(current->next!= nullptr){
-        Node* removedNode = current->next;
-        current->next = removedNode->next;
-        delete removedNode;
-    }
-    else
-        std::cout << "Data not found in the list." << std::endl;
-
-    delete current;
+    newNode->next = currentNode->next;
+    currentNode->next = newNode;
 }
 
+void SortedLinkedList::remove(int index) {
+    if (head == nullptr)
+        throw std::out_of_range("List is empty");
 
-std::ostream& operator<<(std::ostream& os, const SortedLinkedList list){
-    Node* current = list.head;
-    while(current!= nullptr){
-        os << current->data << " ";
-        current = current->next;
+    Node* currentNode = head;
+    if (index == 0) {
+        head = head->next;
+        delete currentNode;
+        return;
+    }
+
+    for (int i = 0; i < index; i++) {
+        if (currentNode == nullptr || currentNode->next == nullptr)
+            throw std::out_of_range("Index out of range.");
+        currentNode = currentNode->next;
+    }
+
+    Node* deletedNode = currentNode->next;
+    currentNode->next = deletedNode->next;
+    delete deletedNode;
+}
+
+std::ostream& operator<<(std::ostream& os, const SortedLinkedList& list){
+    Node* currentNode = list.head;
+    while(currentNode!= nullptr){
+        os << currentNode->data << " ";
+        currentNode = currentNode->next;
     }
     os << std::endl;
-    delete current;
     return os;
 }
 
 int SortedLinkedList::operator[](int index){
-    Node* current = head;
-    for(int i = 0; i < index; i++){
-        if(current == nullptr)
+    Node* currentNode = head;
+
+    if(index < 0)
+        throw std::invalid_argument("No Negative number | Index out of range");
+
+    for(int i = 0; i <= index; i++){
+        if(currentNode == nullptr)
             throw std::out_of_range("Index out of range.");
-        current = current->next;
+        currentNode = currentNode->next;
     }
-    return current->data;
+
+    return currentNode->data;
 }
 
 SortedLinkedList::~SortedLinkedList(){
-    Node* current = head;
-    while(current!= nullptr){
-        Node* temp = current;
-        current = current->next;
+    Node* currentNode = head;
+    while(currentNode!= nullptr){
+        Node* temp = currentNode;
+        currentNode = currentNode->next;
         delete temp;
     }
-    delete current;
-    delete head;
 }
 

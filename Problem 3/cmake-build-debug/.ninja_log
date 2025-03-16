@@ -1,0 +1,9 @@
+# ninja log v6
+88	419	7637636512256726	CMakeFiles/Problem_3.dir/SortedLinkedList/Node/Node.cpp.obj	734564002bf3821d
+78	1397	7637636512157775	CMakeFiles/Problem_3.dir/SortedLinkedList/SortedLinkedList.cpp.obj	7c8c86ea4e86d967
+43	1365	7637637069309878	CMakeFiles/Problem_3.dir/main.cpp.obj	5535591590c9b7af
+1371	2159	7637637082590180	Problem_3.exe	54cb8d5341aec3b7
+74	1175	7637888873255265	CMakeFiles/Problem_3.dir/main.cpp.obj	5535591590c9b7af
+1176	1591	7637888884275816	Problem_3.exe	54cb8d5341aec3b7
+11	1017	7637893590415116	CMakeFiles/Problem_3.dir/main.cpp.obj	5535591590c9b7af
+1019	1237	7637893600488176	Problem_3.exe	54cb8d5341aec3b7

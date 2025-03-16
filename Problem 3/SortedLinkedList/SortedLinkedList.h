@@ -13,7 +13,7 @@
  */
 class SortedLinkedList {
 private:
-    Node* head;  // (first node) of the linked list.
+    Node* head;
 
 public:
     /**
@@ -39,7 +39,7 @@ public:
      * @param list The sorted linked list to be displayed.
      * @return The output stream reference after inserting the list representation.
      */
-    friend std::ostream& operator<<(std::ostream& os, const SortedLinkedList list);
+    friend std::ostream& operator<<(std::ostream& os, const SortedLinkedList& list);
 
     /**
      * @brief Overloads the subscript operator to access an element at a given index.
@@ -55,4 +55,4 @@ public:
     ~SortedLinkedList();
 };
 
-#endif // SORTEDLINKEDLIST_H
+#endif
