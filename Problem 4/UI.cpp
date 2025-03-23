@@ -38,18 +38,21 @@ bool isDigit(string number){
 
 bool UI::start(){
 
+    string text="Enter which data type you want?"
+                "\n1.float\n2.int\n3.string\n4.character"
+                "\n5.long long\nEnter your choice : ";
+    string choices []={"1","2","3","4","5"};
+    string choice = check_menu(text,choices,5);
+
+
     string Size;
     cout<<"Enter the number of the items : ";
     getline(cin,Size);
-    while (!isDigit(Size))
+    while (!isDigit(Size)) {
         cout<<"Please enter a valid number : ",getline(cin,Size);
+    }
     int size= stoi(Size);
 
-    string text="Enter which data type you want?"
-                "\n1.f\n2.int\n3.string\n4.char"
-                "\n5.ll\nEnter your choice : ";
-    string choices []={"1","2","3","4","5"};
-    string choice = check_menu(text,choices,5);
 
     if(choice=="1")
         SortingSystem<float>sort(size);
@@ -60,14 +63,14 @@ bool UI::start(){
     else if(choice=="4")
         SortingSystem<char>sort(size);
     else
-        SortingSystem<long long >sort(size);
-
+        SortingSystem<long long>sort(size);
 
 
 
     text="Do you want to sort another data set ? (y/n): ";
     string answers []={"y","n"};
     choice = check_menu(text,answers,2);
+
 
     if(choice=="n")
         return false;

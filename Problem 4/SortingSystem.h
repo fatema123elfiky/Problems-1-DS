@@ -17,7 +17,7 @@ private:
     T* data;
     int size;
 
-    void merge(int left , int mid , int right );// Merge Sort helper function
+    void merge(int left , int mid , int right );//done// Merge Sort helper function
     int partition(int low , int high);// Quick Sort helper function
 
 
@@ -25,12 +25,12 @@ public:
     SortingSystem(int n);// done
     ~SortingSystem();// done
 
-    void insertionSort();
-    void selectionSort();
-    void bubbleSort();
-    void shellSort();
-    void mergeSort(int left , int right);
+    void insertionSort();//done
+    void selectionSort();//done
+    void bubbleSort();//done
+    void shellSort();//done
     void quickSort(int left , int right);
+    void mergeSort(int left , int right);//done
     void countSort();
     void radixSort();
     void bucketSort();

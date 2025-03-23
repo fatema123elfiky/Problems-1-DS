@@ -7,10 +7,8 @@
 
 
 class UI {
-
-
 public:
-    bool start();
+    static bool start();
 };
 
 

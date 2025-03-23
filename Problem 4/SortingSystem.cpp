@@ -22,9 +22,6 @@ string check_menu(const string& menuText ,const string choices[],int size ){
     return currentAnswer;
 }
 
-
-
-
 template<typename T>
 void SortingSystem<T> :: viewMenu(){
 
@@ -49,6 +46,7 @@ void SortingSystem<T> :: viewMenu(){
 
         void (SortingSystem<T>::*sortFunc)()= nullptr;
         void (SortingSystem<T>::*sortFunc_2)(int,int)= nullptr;
+
 
         if(choice=="1")
             insertionSort(),sortFunc=&SortingSystem<T>::insertionSort;
@@ -94,7 +92,7 @@ void SortingSystem<T> :: viewMenu(){
 
 
 
-        cout<<"\n\n";
+        cout<<"\n\n"<<"Sorted data : ";
         displayData();
 
         if(sortFunc)
@@ -110,10 +108,11 @@ void SortingSystem<T> :: viewMenu(){
 template <typename T>
 void SortingSystem<T>::displayData() {
 
-    cout<<"Sorted Data: [";
+    cout<<"[";
     for (int index = 0; index < size-1; ++index)
         cout<<data[index]<<',';
     cout<<data[size-1]<<"]\n";
+
 }
 
 template <typename T>
@@ -137,3 +136,156 @@ template <typename T>
 SortingSystem<T>::~SortingSystem() {
     delete [] data ;
 }
+
+template<typename T>
+void SortingSystem<T>::insertionSort() {
+
+    cout<<"Sorting using insertion ... \n";
+    cout<<"Initial data : ";
+    displayData();
+    cout<<'\n';
+
+    for (int index = 1,sub_index; index < size ; ++index) {
+
+        T key=data[index];
+
+        for ( sub_index = index-1; sub_index >=0 ; --sub_index) {
+            if(data[sub_index]>key)
+                data[sub_index+1]=data[sub_index];
+            else
+                break;
+        }
+
+        data[sub_index+1]=key;
+
+        cout<<"Iteration "<<index<<" : ";
+        displayData();
+
+    }
+
+}
+
+template<typename T>
+void SortingSystem<T>::selectionSort() {
+
+    cout<<"Sorting using selection ... \n";
+    cout<<"Initial data : ";
+    displayData();
+    cout<<'\n';
+
+    for (int index = 0,least; index < size; ++index) {
+
+        least=index;
+        for (int pointer = index+1; pointer < size ; ++pointer) {
+            if(data[least]<data[pointer])
+                   least=pointer;
+        }
+        swap(data[least],data[index]);
+
+        cout<<"Iteration "<<index+1<<" : ";
+        displayData();
+
+    }
+
+
+}
+
+template<typename T>
+void SortingSystem<T>::bubbleSort() {
+
+
+    cout<<"Sorting using bubbleSort ... \n";
+    cout<<"Initial data : ";
+    displayData();
+    cout<<'\n';
+
+
+    for (int index = 0; index < size-1; ++index) {
+
+        for (int sub_index = 0; sub_index < size-index-1; ++sub_index) {
+            if(data[sub_index]>data[sub_index+1])
+                swap(data[sub_index],data[sub_index+1]);
+        }
+
+        cout<<"Iteration "<<index+1<<" : ";
+        displayData();
+    }
+
+
+}
+
+template<typename T>
+void SortingSystem<T>::shellSort() {
+
+    cout<<"Sorting using shellSort ... \n";
+    cout<<"Initial data : ";
+    displayData();
+    cout<<'\n';
+
+
+    for (int gap = size/2; gap > 0; gap/=2) {
+
+        cout<<"After gap of size "<<gap<<" : ";
+        for (int index = gap; index < size ; ++index) {
+
+            int gaped_index=index;
+            while (gaped_index>=gap&&data[gaped_index]<data[gaped_index - gap ])
+                swap(data[gaped_index],data[gaped_index - gap ]),gaped_index-=gap;
+
+        }
+        displayData();
+
+    }
+
+
+}
+
+template<typename T>
+void SortingSystem<T>::mergeSort(int left, int right) {
+
+    if(left>=right)
+        return;
+
+    int mid=(left+right)/2;
+
+    mergeSort(left,mid);
+    mergeSort(mid+1,right);
+    merge(left,mid,right);
+
+}
+
+template<typename T>
+void SortingSystem<T>::merge(int left, int mid, int right) {
+
+    int size_1 = mid-left+1 , size_2 = right-mid;
+
+    T*part_1=new T(size_1);
+    T*part_2=new T(size_2);
+
+    for (int index = left; index <= mid; ++index)
+        part_1[index]=data[index];
+    for (int index = mid+1; index <= right; ++index)
+        part_2[index]=data[index];
+
+
+    int pointer_1=0,pointer_2=0,pointer=left;
+    while (pointer_1<size_1 && pointer_2<size_2){
+        if(part_1[pointer_1]<=part_2[pointer_2])
+            data[pointer++]=part_1[pointer_1++];
+        else
+            data[pointer++]=part_2[pointer_2++];
+    }
+
+    while (pointer_1<size_1)
+        data[pointer++]=part_1[pointer_1++];
+    while (pointer_2<size_2)
+        data[pointer++]=part_2[pointer_2++];
+
+    cout<<"Sorted part of size "<<size_1+size_2<<" : [";
+    for (int index = left; index <right ; ++index)
+        cout<<data[index]<<',';
+    cout<<data[right]<<"]\n";
+
+}
+
+
