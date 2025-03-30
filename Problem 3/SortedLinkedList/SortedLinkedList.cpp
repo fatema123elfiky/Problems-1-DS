@@ -1,5 +1,4 @@
 #include "SortedLinkedList.h"
-
 #include <iostream>
 
 SortedLinkedList::SortedLinkedList(){
@@ -10,7 +9,7 @@ void SortedLinkedList::insert(int data){
     Node* newNode = new Node(data);
     if(head == nullptr || head->data >= newNode->data){
         newNode->next = head;
-        head = newNode;
+        head =  newNode;
         return;
     }
 
@@ -33,13 +32,15 @@ void SortedLinkedList::remove(int index) {
         return;
     }
 
-    for (int i = 0; i < index; i++) {
+    for (int i = 0; i < index-1; i++) {
         if (currentNode == nullptr || currentNode->next == nullptr)
             throw std::out_of_range("Index out of range.");
         currentNode = currentNode->next;
     }
 
     Node* deletedNode = currentNode->next;
+    if (deletedNode == nullptr)
+        throw std::out_of_range("Index out of range.");
     currentNode->next = deletedNode->next;
     delete deletedNode;
 }
@@ -76,5 +77,6 @@ SortedLinkedList::~SortedLinkedList(){
         currentNode = currentNode->next;
         delete temp;
     }
+    head = nullptr;
 }
 

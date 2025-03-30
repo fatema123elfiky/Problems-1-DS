@@ -7,8 +7,8 @@
  */
 class Node {
 public:
-    int data;  ///< The value stored in the node.
-    Node* next; ///< Pointer to the next node in the list.
+    int data;
+    Node* next;
 
     /**
      * @brief Constructor to initialize a node with a given value.

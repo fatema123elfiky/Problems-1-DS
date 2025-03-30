@@ -1,4 +1,4 @@
-"C:\Users\HP\AppData\Local\JetBrains\CLion 2024.1.2\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=C:/Users/HP/AppData/Local/JetBrains/CLion 2024.1.2/bin/ninja/win/x64/ninja.exe" -G Ninja -S "C:\Users\HP\OneDrive\Desktop\My_code\Data Structure and algo by cpp\DS-Assignment-1\Problem 3" -B "C:\Users\HP\OneDrive\Desktop\My_code\Data Structure and algo by cpp\DS-Assignment-1\Problem 3\cmake-build-debug"
--- Configuring done (0.2s)
--- Generating done (0.0s)
--- Build files have been written to: C:/Users/HP/OneDrive/Desktop/My_code/Data Structure and algo by cpp/DS-Assignment-1/Problem 3/cmake-build-debug
+"D:\CLion 2024.3.4\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=D:/CLion 2024.3.4/bin/ninja/win/x64/ninja.exe" -G Ninja -S "C:\Users\aibak\OneDrive\Desktop\My_code\Data Structure and algo by cpp\DS-Assignment-1\Problem 3" -B "C:\Users\aibak\OneDrive\Desktop\My_code\Data Structure and algo by cpp\DS-Assignment-1\Problem 3\cmake-build-debug"
+-- Configuring done (0.3s)
+-- Generating done (0.1s)
+-- Build files have been written to: C:/Users/aibak/OneDrive/Desktop/My_code/Data Structure and algo by cpp/DS-Assignment-1/Problem 3/cmake-build-debug

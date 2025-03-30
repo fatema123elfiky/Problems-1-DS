@@ -7,4 +7,6 @@ add_executable(Problem_3 main.cpp
         SortedLinkedList/SortedLinkedList.h
         SortedLinkedList/SortedLinkedList.cpp
         SortedLinkedList/Node/Node.h
-        SortedLinkedList/Node/Node.cpp)
+        SortedLinkedList/Node/Node.cpp
+        SortedLinkedList/SortedLinkedList.cpp
+        SortedLinkedList/SortedLinkedList.h)
