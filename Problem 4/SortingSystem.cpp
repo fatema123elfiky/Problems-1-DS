@@ -23,32 +23,34 @@ private:
     T* data;
     int size;
 
-    void merge(int left , int mid , int right );//done // Merge Sort helper function
-    int partition(int low , int high);//done// Quick Sort helper function
+    void merge(int left , int mid , int right );// Merge Sort helper function
+    int partition(int low , int high);// Quick Sort helper function
 
 
 public:
-    SortingSystem(int n);// done
-    ~SortingSystem();// done
+    SortingSystem(int n);
+    ~SortingSystem();
 
-    void insertionSort();//done
-    void selectionSort();//done
-    void bubbleSort();//done
-    void shellSort();//done
-    void quickSort(int left , int right);//done
-    void mergeSort(int left , int right);//done
-    void countSort();//done
-    void radixSort();//done
+    void insertionSort();
+    void selectionSort();
+    void bubbleSort();
+    void shellSort();
+    void quickSort(int left , int right);
+    void mergeSort(int left , int right);
+    void countSort();
+    void radixSort();
     void bucketSort();
 
 
-    void displayData();//done
-    void measureSortTime(void (SortingSystem<T>::*sortFunc) () );//done
-    void measureSortTime(void (SortingSystem<T>::*sortFunc) (int left , int right) , int left ,int right );//done
-    void viewMenu();//done
+    void displayData();
+    void measureSortTime(void (SortingSystem<T>::*sortFunc) () );
+    void measureSortTime(void (SortingSystem<T>::*sortFunc) (int left , int right) , int left ,int right );
+    void viewMenu();
 
 };
 
+
+//Helper functions
 string check_menu(const string& menuText ,const string choices[],int size ){
     string currentAnswer;
 
@@ -76,11 +78,16 @@ bool isDigit(string number){
     return true;
 }
 
+
+
+// Methods of the class
 template<typename T>
 void SortingSystem<T> :: viewMenu(){
 
 
         again:
+
+        // choosing the type of sorting algo
         string text ="Select a sorting algorithm: \n1. Insertion Sort \n"
                      "2. Selection Sort \n"
                      "3. Bubble Sort \n"
@@ -156,26 +163,39 @@ void SortingSystem<T> :: viewMenu(){
         }
         else if(choice=="7"){
 
-            if constexpr (is_integral_v<T>)
+            if constexpr (is_integral_v<T>) {
+                cout<<"Sorting using count sort ... \n";
+                cout<<"Initial data : ";
+                displayData();
+                cout<<'\n';
                 measureSortTime(&SortingSystem<T>::countSort);
 
-            else {
+            }else {
                 cout << "Sorry ,Try again!!\n\n";
                 goto again;
             }
 
         }else if(choice=="8"){
 
-            if constexpr (is_integral_v<T>)
+            if constexpr (is_integral_v<T>) {
+                cout<<"Sorting using radix sort ... \n";
+                cout<<"Initial data : ";
+                displayData();
+                cout<<'\n';
                 measureSortTime(&SortingSystem<T>::radixSort);
 
-            else {
+            }else {
                 cout << "Sorry ,Try again!!\n\n";
                 goto again;
             }
 
-        }else
+        }else {
+            cout<<"Sorting using bucket sort ... \n";
+            cout<<"Initial data : ";
+            displayData();
+            cout<<'\n';
             measureSortTime(&SortingSystem<T>::bucketSort);
+        }
 
 
 
@@ -204,6 +224,7 @@ SortingSystem<T>::SortingSystem(int n):size(n) {
         while (counter<size) {
             cout << "Enter data " << counter+1 << ": ";
             cin>>data[counter++];
+            //cout<<data[counter-1];
         }
     }
     else
@@ -220,11 +241,17 @@ SortingSystem<T>::~SortingSystem() {
 template <typename T>
 void SortingSystem<T>::measureSortTime(void (SortingSystem<T>::*sortFunc)()) {
 
+    // instant time
     auto start= chrono::high_resolution_clock ::now();
+    // function is executed
     (this->*sortFunc)();
+    // instant time
     auto end=chrono::high_resolution_clock ::now();
+
     cout<<"\n\n"<<"Sorted data : ";
     displayData();
+
+    //difference between the instants
     chrono:: duration<double> Duration = end-start;
     cout<<"Sorting Time: "<<Duration.count()<<" seconds ";
 
@@ -232,14 +259,23 @@ void SortingSystem<T>::measureSortTime(void (SortingSystem<T>::*sortFunc)()) {
 
 template<typename T>
 void SortingSystem<T>::measureSortTime(void (SortingSystem<T>::*sortFunc)(int, int), int left, int right) {
+
+    // instant time
     auto start= chrono::high_resolution_clock ::now();
+    // function is executed
     (this->*sortFunc)(left,right);
+    // instant time
     auto end=chrono::high_resolution_clock ::now();
+
     cout<<"\n\n"<<"Sorted data : ";
     displayData();
+
+    //difference between the instants
     chrono:: duration<double> Duration = end-start;
     cout<<"Sorting Time: "<<Duration.count()<<" seconds ";
 }
+
+
 
 template<typename T>
 void SortingSystem<T>::insertionSort() {
@@ -344,10 +380,10 @@ void SortingSystem<T>::merge(int left, int mid, int right) {
     T*part_1=new T[size_1];
     T*part_2=new T[size_2];
 
-    for (int index = left; index <= mid; ++index)
-        part_1[index]=data[index];
-    for (int index = mid+1; index <= right; ++index)
-        part_2[index]=data[index];
+    for (int index = left,index_2=0; index <= mid; ++index,index_2++)
+        part_1[index_2]=data[index];
+    for (int index = mid+1,index_2=0; index <= right; ++index,index_2++)
+        part_2[index_2]=data[index];
 
 
     int pointer_1=0,pointer_2=0,pointer=left;
@@ -368,6 +404,9 @@ void SortingSystem<T>::merge(int left, int mid, int right) {
         cout<<data[index]<<',';
     cout<<data[right]<<"]\n";
 
+    delete [] part_1;
+    delete [] part_2;
+
 }
 
 template<typename T>
@@ -378,10 +417,14 @@ void SortingSystem<T>::quickSort(int left, int right) {
     int pivot = partition(left,right);
 
 
-    cout<<"Pivot: "<<data[pivot]<<" --> [";
-    for (int index = left; index < pivot-1 ; ++index)
-        cout<<data[index]<<", ";
-    cout<<data[pivot-1]<<"] "<<data[pivot]<<" [";
+    cout<<"Pivot: "<<data[pivot]<<" -->";
+    if(pivot!=left){
+        cout<<" [";
+        for (int index = left; index < pivot - 1; ++index)
+            cout << data[index] << ", ";
+        cout << data[pivot - 1] << "] " << data[pivot] << " [";
+    }else
+        cout<<data[pivot]<< " [";
     for (int index = pivot+1; index < right ; ++index)
         cout<<data[index]<<", ";
     cout<<data[right]<<"]\n";
@@ -407,6 +450,9 @@ int SortingSystem<T>::partition(int low, int high) {
 
 }
 
+
+
+
 //Some revision and test !!
 template <typename T>
 void SortingSystem<T>::countSort() {
@@ -417,14 +463,19 @@ void SortingSystem<T>::countSort() {
     int max = *( max_element(data , data+size) );
     int * freq_array = new int (max+1);
 
-
+    // the idea about counting the repeating times of certain number and accumulating that array
     for (int index = 0; index <= max; ++index)
         freq_array[index]=0;
+    cout<<"Number of times of appearing that numbers : \n\n";
     for (int index = 0; index < size; ++index)
         freq_array[index]++;
+    for (int index = 0; index < size; ++index)
+        cout<<data[index]<<" appears in --> "<<freq_array[index]<<"  ";
     for (int index = 1; index <=max ; ++index)
         freq_array[index]+=freq_array[index-1];
 
+
+    // positioning the elements sorted
     for (int index = size-1; index >=0 ; --index) {
         int new_position = --freq_array[ data[index] ];
         sorted_array[new_position]=data[index];
@@ -441,8 +492,10 @@ void SortingSystem<T>::radixSort() {
     int * freq_array  = new int [10];
     int max = * (max_element(data,data+size));
 
+    // same idea of counting sort but extra external loop to sort according to digits
     for (int divisor = 1; max/divisor > 0 ; divisor*=10) {
 
+        cout<<"After sorting according to "<<divisor<<"th : ";
         for (int index = 0; index < 10; ++index)
             freq_array[index]=0;
         for (int index = 0; index < size; ++index) {
@@ -458,30 +511,40 @@ void SortingSystem<T>::radixSort() {
             sorted_array[new_position]=data[index] ;
         }
         swap(sorted_array,data);
+        displayData();
+        cout<<'\n';
     }
+    delete [] sorted_array;
+    delete [] freq_array;
+}
+
+template<typename T>
+void SortingSystem<T>::bucketSort() {
 
 }
 
 int main(){
 
+    //to know whether start with file or input user or not
     string Text="you want to take input from file or user ?\n1.file\n2.user\nEnter your choice : ";
     string options[] = {"1", "2"};
     string Choice = check_menu(Text, options, 2);
-
-
     ifstream File("input.txt");
-
     if(Choice=="1")
         isFile= true;
+
+
 
     while (true){
 
         string Size,type,isBreak;
 
         if(isFile){
+            // take which datatype and the size of the array
             File>>type>>Size;
             int size=stoi(Size);
 
+            // allocating the pointer based on type and the size
             if(type=="1") {
                 Array = new float[size];
             }
@@ -498,6 +561,7 @@ int main(){
                 Array = new long long[size];
             }
 
+            // getting values
             int counter=0;
             while (counter<size){
                 ostringstream value;
@@ -536,11 +600,15 @@ int main(){
                 counter++;
             }
 
+            // which sorting algo to be implemented and continue or not
             File>>choice_sorting;
             File>>isBreak;
 
         }
 
+        // these scenario in case of user's input
+
+        //take datatype
         string text = "Enter which data type you want?"
                       "\n1.float\n2.int\n3.string\n4.character"
                       "\n5.long long\nEnter your choice : ";
@@ -550,6 +618,7 @@ int main(){
         if(isFile)
             choice=type;
 
+        //take size
         int size ;
         if(!isFile){
             string volume;
@@ -562,7 +631,7 @@ int main(){
             size= stoi(Size);
 
 
-
+        // allocate the array
         if (choice == "1")
             SortingSystem<float> SortedArray(size);
         else if (choice == "2")
@@ -575,6 +644,7 @@ int main(){
             SortingSystem<long long> SortedArray(size);
 
 
+        // ask for continue or breaking
         text = "Do you want to sort another data set ? (y/n): ";
         string answers[] = {"y", "n"};
         choice = check_menu(text, answers, 2);
