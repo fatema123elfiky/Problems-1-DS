@@ -195,11 +195,18 @@ void SortingSystem<T> :: viewMenu(){
         }
 
     }else {
-        cout<<"Sorting using bucket sort ... \n";
-        cout<<"Initial data : ";
-        displayData();
-        cout<<'\n';
-        measureSortTime(&SortingSystem<T>::bucketSort);
+
+        if constexpr (is_arithmetic_v<T>) {
+            cout<<"Sorting using bucket sort ... \n";
+            cout<<"Initial data : ";
+            displayData();
+            cout<<'\n';
+            measureSortTime(&SortingSystem<T>::bucketSort);
+
+        }else {
+            cout << "Sorry ,Try again!!\n\n";
+            goto again;
+        }
     }
 
 
