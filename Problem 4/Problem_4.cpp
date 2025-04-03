@@ -8,6 +8,8 @@
 #include <fstream>
 #include <sstream>
 #include <chrono>
+#include <cmath>
+#include <type_traits>
 using namespace std;
 
 
@@ -85,117 +87,117 @@ template<typename T>
 void SortingSystem<T> :: viewMenu(){
 
 
-        again:
+    again:
 
-        // choosing the type of sorting algo
-        string text ="Select a sorting algorithm: \n1. Insertion Sort \n"
-                     "2. Selection Sort \n"
-                     "3. Bubble Sort \n"
-                     "4. Shell Sort \n"
-                     "5. Merge Sort \n"
-                     "6. Quick Sort \n"
-                     "7. Count Sort (Only for integers) \n"
-                     "8. Radix Sort (Only for integers) \n"
-                     "9. Bucket Sort \n"
-                     "Enter your choice : ";
-        string choices[9]={"1","2","3","4","5","6","7","8","9"};
-        string choice =check_menu(text,choices,9);
-        if(isFile)
-            choice=choice_sorting;
-
-
-
-
+    // choosing the type of sorting algo
+    string text ="Select a sorting algorithm: \n1. Insertion Sort \n"
+                 "2. Selection Sort \n"
+                 "3. Bubble Sort \n"
+                 "4. Shell Sort \n"
+                 "5. Merge Sort \n"
+                 "6. Quick Sort \n"
+                 "7. Count Sort (Only for integers) \n"
+                 "8. Radix Sort (Only for integers) \n"
+                 "9. Bucket Sort \n"
+                 "Enter your choice : ";
+    string choices[9]={"1","2","3","4","5","6","7","8","9"};
+    string choice;
+    if(!isFile)
+        choice=check_menu(text,choices,9);
+    else
+        choice=choice_sorting;
 
 
 
-        if(choice=="1") {
 
-            cout<<"Sorting using insertion ... \n";
+
+    if(choice=="1") {
+
+        cout<<"Sorting using insertion ... \n";
+        cout<<"Initial data : ";
+        displayData();
+        cout<<'\n';
+        measureSortTime(&SortingSystem<T>::insertionSort);
+
+    }
+    else if(choice=="2") {
+
+        cout<<"Sorting using selection ... \n";
+        cout<<"Initial data : ";
+        displayData();
+        cout<<'\n';
+        measureSortTime(&SortingSystem<T>::selectionSort);
+
+    }
+    else if(choice=="3") {
+
+        cout<<"Sorting using bubbleSort ... \n";
+        cout<<"Initial data : ";
+        displayData();
+        cout<<'\n';
+        measureSortTime(&SortingSystem<T>::bubbleSort);
+
+    }
+    else if(choice=="4") {
+
+        cout<<"Sorting using shellSort ... \n";
+        cout<<"Initial data : ";
+        displayData();
+        cout<<'\n';
+        measureSortTime(&SortingSystem<T>::shellSort);
+
+    }
+    else if(choice=="5") {
+
+        cout<<"Sorting using merge sort ... \n";
+        cout<<"Initial data : ";
+        displayData();
+        cout<<'\n';
+        measureSortTime(&SortingSystem<T>::mergeSort,0,size-1);
+
+    }
+    else if(choice=="6") {
+        cout<<"Sorting using quicksort ... \n";
+        cout<<"Initial data : ";
+        displayData();
+        cout<<'\n';
+        measureSortTime(&SortingSystem<T>::quickSort,0,size-1);
+    }
+    else if(choice=="7"){
+
+        if constexpr (is_integral_v<T>) {
+            cout<<"Sorting using count sort ... \n";
             cout<<"Initial data : ";
             displayData();
             cout<<'\n';
-            measureSortTime(&SortingSystem<T>::insertionSort);
-
-        }
-        else if(choice=="2") {
-
-            cout<<"Sorting using selection ... \n";
-            cout<<"Initial data : ";
-            displayData();
-            cout<<'\n';
-            measureSortTime(&SortingSystem<T>::selectionSort);
-
-        }
-        else if(choice=="3") {
-
-            cout<<"Sorting using bubbleSort ... \n";
-            cout<<"Initial data : ";
-            displayData();
-            cout<<'\n';
-            measureSortTime(&SortingSystem<T>::bubbleSort);
-
-        }
-        else if(choice=="4") {
-
-            cout<<"Sorting using shellSort ... \n";
-            cout<<"Initial data : ";
-            displayData();
-            cout<<'\n';
-            measureSortTime(&SortingSystem<T>::shellSort);
-
-        }
-        else if(choice=="5") {
-
-            cout<<"Sorting using merge sort ... \n";
-            cout<<"Initial data : ";
-            displayData();
-            cout<<'\n';
-            measureSortTime(&SortingSystem<T>::mergeSort,0,size-1);
-
-        }
-        else if(choice=="6") {
-            cout<<"Sorting using quicksort ... \n";
-            cout<<"Initial data : ";
-            displayData();
-            cout<<'\n';
-            measureSortTime(&SortingSystem<T>::quickSort,0,size-1);
-        }
-        else if(choice=="7"){
-
-            if constexpr (is_integral_v<T>) {
-                cout<<"Sorting using count sort ... \n";
-                cout<<"Initial data : ";
-                displayData();
-                cout<<'\n';
-                measureSortTime(&SortingSystem<T>::countSort);
-
-            }else {
-                cout << "Sorry ,Try again!!\n\n";
-                goto again;
-            }
-
-        }else if(choice=="8"){
-
-            if constexpr (is_integral_v<T>) {
-                cout<<"Sorting using radix sort ... \n";
-                cout<<"Initial data : ";
-                displayData();
-                cout<<'\n';
-                measureSortTime(&SortingSystem<T>::radixSort);
-
-            }else {
-                cout << "Sorry ,Try again!!\n\n";
-                goto again;
-            }
+            measureSortTime(&SortingSystem<T>::countSort);
 
         }else {
-            cout<<"Sorting using bucket sort ... \n";
+            cout << "Sorry ,Try again!!\n\n";
+            goto again;
+        }
+
+    }else if(choice=="8"){
+
+        if constexpr (is_integral_v<T>) {
+            cout<<"Sorting using radix sort ... \n";
             cout<<"Initial data : ";
             displayData();
             cout<<'\n';
-            measureSortTime(&SortingSystem<T>::bucketSort);
+            measureSortTime(&SortingSystem<T>::radixSort);
+
+        }else {
+            cout << "Sorry ,Try again!!\n\n";
+            goto again;
         }
+
+    }else {
+        cout<<"Sorting using bucket sort ... \n";
+        cout<<"Initial data : ";
+        displayData();
+        cout<<'\n';
+        measureSortTime(&SortingSystem<T>::bucketSort);
+    }
 
 
 
@@ -218,13 +220,13 @@ SortingSystem<T>::SortingSystem(int n):size(n) {
     if(n<=0)
         size=1;
 
+    // setting data with values
     if(!isFile) {
         data = new T[size];
         int counter=0;
         while (counter<size) {
             cout << "Enter data " << counter+1 << ": ";
             cin>>data[counter++];
-            //cout<<data[counter-1];
         }
     }
     else
@@ -253,7 +255,8 @@ void SortingSystem<T>::measureSortTime(void (SortingSystem<T>::*sortFunc)()) {
 
     //difference between the instants
     chrono:: duration<double> Duration = end-start;
-    cout<<"Sorting Time: "<<Duration.count()<<" seconds ";
+    cout<<"Sorting Time: "<<Duration.count()<<" seconds\n"
+    <<"------------------------------------------------------\n\n\n";
 
 }
 
@@ -272,7 +275,8 @@ void SortingSystem<T>::measureSortTime(void (SortingSystem<T>::*sortFunc)(int, i
 
     //difference between the instants
     chrono:: duration<double> Duration = end-start;
-    cout<<"Sorting Time: "<<Duration.count()<<" seconds ";
+    cout<<"Sorting Time: "<<Duration.count()<<" seconds\n"
+    <<"------------------------------------------------------\n\n\n";
 }
 
 
@@ -280,17 +284,17 @@ void SortingSystem<T>::measureSortTime(void (SortingSystem<T>::*sortFunc)(int, i
 template<typename T>
 void SortingSystem<T>::insertionSort() {
 
+    // iterating on each element to set it in right position
     for (int index = 1,sub_index; index < size ; ++index) {
 
         T key=data[index];
-
+        // setting the key in the right position in the sorted subarray
         for ( sub_index = index-1; sub_index >=0 ; --sub_index) {
             if(data[sub_index]>key)
                 data[sub_index+1]=data[sub_index];
             else
                 break;
         }
-
         data[sub_index+1]=key;
 
         cout<<"Iteration "<<index<<" : ";
@@ -304,12 +308,15 @@ template<typename T>
 void SortingSystem<T>::selectionSort() {
 
 
+    //iterating on each position and find the best value matches that position
     for (int index = 0,least; index < size; ++index) {
 
         least=index;
+         // getting the index of the least value in the second part of
+        // the array to set it in that position
         for (int pointer = index+1; pointer < size ; ++pointer) {
-            if(data[least]<data[pointer])
-                   least=pointer;
+            if(data[least]>data[pointer])
+                least=pointer;
         }
         swap(data[least],data[index]);
 
@@ -461,16 +468,16 @@ void SortingSystem<T>::countSort() {
     T * sorted_array = new T [size];
 
     int max = *( max_element(data , data+size) );
-    int * freq_array = new int (max+1);
+    int * freq_array = new int [max+1];
 
     // the idea about counting the repeating times of certain number and accumulating that array
     for (int index = 0; index <= max; ++index)
         freq_array[index]=0;
     cout<<"Number of times of appearing that numbers : \n\n";
     for (int index = 0; index < size; ++index)
-        freq_array[index]++;
+        freq_array[data[index]]++;
     for (int index = 0; index < size; ++index)
-        cout<<data[index]<<" appears in --> "<<freq_array[index]<<"  ";
+        cout<<data[index]<<" appears in --> "<<freq_array[data[index]]<<" times\n";
     for (int index = 1; index <=max ; ++index)
         freq_array[index]+=freq_array[index-1];
 
@@ -481,7 +488,7 @@ void SortingSystem<T>::countSort() {
         sorted_array[new_position]=data[index];
     }
 
-    delete freq_array , delete data;
+    delete[] freq_array , delete [] data;
     data=sorted_array;
 }
 
@@ -499,8 +506,8 @@ void SortingSystem<T>::radixSort() {
         for (int index = 0; index < 10; ++index)
             freq_array[index]=0;
         for (int index = 0; index < size; ++index) {
-           int digit= (data[index] / divisor) % 10 ;
-           freq_array[digit]++;
+            int digit= (data[index] / divisor) % 10 ;
+            freq_array[digit]++;
         }
         for (int index = 1; index < 10; ++index)
             freq_array[index]+=freq_array[index-1];
@@ -520,6 +527,61 @@ void SortingSystem<T>::radixSort() {
 
 template<typename T>
 void SortingSystem<T>::bucketSort() {
+
+
+    T maxValue= *max_element(data,data+size);
+    T minValue= *min_element(data,data+size);
+
+    if(minValue==maxValue) {
+        cout<<"It is already sorted\n";
+        return;
+    }
+
+    double Bucket_Width;
+    int* counts = new int [size]();
+
+    if constexpr (is_arithmetic<T>::value){
+        if constexpr (is_integral<T>::value)
+            Bucket_Width=  double(maxValue - minValue + 1) / size;
+        else
+            Bucket_Width=  double(maxValue - minValue) / size;
+        for (int pointer = 0; pointer < size; pointer++) {
+            int index = min( (int) floor ((data[pointer] - minValue) / Bucket_Width) , size - 1);
+            counts[index]++;
+        }
+    }
+
+    T** buckets = new T*[size];
+    for (int index = 0; index < size; index++)
+        buckets[index] = new T[counts[index]];
+
+    for (int index = 0; index < size; index++)
+        counts[index] = 0;
+
+    if constexpr (is_arithmetic<T>::value) {
+
+        for (int pointer = 0; pointer < size; pointer++) {
+            int index = min((int) floor((data[pointer] - minValue) / Bucket_Width), size - 1);
+            buckets[index][counts[index]++] = data[pointer];
+        }
+    }
+
+    for (int index = 0; index < size; index++)
+        if (counts[index] > 0)
+            sort(buckets[index], buckets[index] + counts[index]);
+
+    int position = 0;
+    for (int index_row = 0; index_row < size; index_row++)
+        for (int index_column = 0; index_column < counts[index_row]; index_column++)
+            data[position++] = buckets[index_row][index_column];
+
+    for (int index = 0; index < size; index++)
+        delete[] buckets[index];
+
+    delete[] buckets;
+    delete[] counts;
+
+
 
 }
 
@@ -572,19 +634,22 @@ int main(){
                     value<<val;
                     float * ConvertArray=static_cast<float*>(Array);
                     ConvertArray[counter] = stof(value.str());
-                }else if (type == "2"){
+                }
+                else if (type == "2"){
                     string val;
                     File>>val;
                     value<<val;
                     int * ConvertArray=static_cast<int*>(Array);
                     ConvertArray[counter] = stoi(value.str());
-                }else if(type=="3"){
+                }
+                else if(type=="3"){
                     string val;
                     File>>val;
                     value<<val;
                     string * ConvertArray=static_cast<string*>(Array);
                     ConvertArray[counter] = value.str();
-                }else if(type == "4") {
+                }
+                else if(type == "4") {
                     char val;
                     File>>val;
                     char * ConvertArray=static_cast<char*>(Array);
@@ -613,10 +678,12 @@ int main(){
                       "\n1.float\n2.int\n3.string\n4.character"
                       "\n5.long long\nEnter your choice : ";
         string choices[] = {"1", "2", "3", "4", "5"};
-        string choice = check_menu(text, choices, 5);
-
-        if(isFile)
+        string choice;
+        if(!isFile)
+            choice = check_menu(text, choices, 5);
+        else
             choice=type;
+
 
         //take size
         int size ;
@@ -647,8 +714,9 @@ int main(){
         // ask for continue or breaking
         text = "Do you want to sort another data set ? (y/n): ";
         string answers[] = {"y", "n"};
-        choice = check_menu(text, answers, 2);
-        if(isFile)
+        if(!isFile)
+            choice = check_menu(text, answers, 2);
+        else
             choice=isBreak;
 
         if (choice == "n")
