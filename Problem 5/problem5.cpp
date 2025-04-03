@@ -21,24 +21,12 @@ public:
     StatisticalCalculation(int size) : size(size) {
         data = new T[size];
     }
-
     //destructor
     ~StatisticalCalculation() {
         delete[] data;
     }
 
-    //take elements from user and validate that entered elements are only numeric e.g, -2 , 4.0 , 5 , 2.5
-    void inputData() {
-        for (int i = 0; i < size; i++) {
-            cout << "Enter element " << i + 1 << ": ";
-            //the loop works when user enters an invalid element (non-numeric)
-            while (!(cin >> data[i])) {
-                cout << "Invalid input. Please enter a valid number: ";
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            }
-        }
-    }
+
 
     //function to sort the data
     void sort() {
@@ -90,6 +78,12 @@ public:
         return sum;
     }
 
+
+
+
+
+    //Utility functions
+    
     //display sorted array
     void displayArray() {
         cout << endl;
@@ -100,35 +94,7 @@ public:
         }
 
     }
-
-    //the main menu of statistical operations
-    void statisticsMenu() {
-        string choice;
-        do {
-            displayArray();
-            cout << "\nSelect a statistical calculation:\n";
-            cout << "1. Find Median\n";
-            cout << "2. Find Minimum\n";
-            cout << "3. Find Maximum\n";
-            cout << "4. Find Mean\n";
-            cout << "5. Find Summation\n";
-            cout << "6. Exit\n";
-            cout << "Enter your choice (1-6): ";
-            cin >> choice;
-
-            if(choice == "1") cout << "Median: " << findMedian() << endl;
-            else if(choice == "2") cout << "Minimum: " << findMin() << endl;
-            else if(choice == "3") cout << "Maximum: " << findMax() << endl;
-            else if(choice == "4") cout << "Mean: " << findMean() << endl;
-            else if(choice == "5") cout << "Summation: " << findSummation() << endl;
-            else if(choice =="6")  cout << "Exiting program...\n";
-            else cout << "Invalid choice! Please enter a valid option.\n";
-
-
-
-        } while (choice != "6");
-    }
-
+    
     //take input from a .txt file
     bool inputDataFromFile(const string& filename) {
         ifstream file(filename);
@@ -165,6 +131,49 @@ public:
         file.close();
         return true;
     }
+    
+    //take elements from user and validate that entered elements are only numeric e.g, -2 , 4.0 , 5 , 2.5
+    void inputData() {
+        for (int i = 0; i < size; i++) {
+            cout << "Enter element " << i + 1 << ": ";
+            //the loop works when user enters an invalid element (non-numeric)
+            while (!(cin >> data[i])) {
+                cout << "Invalid input. Please enter a valid number: ";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+        }
+    }
+    
+    //the main menu of statistical operations
+    void statisticsMenu() {
+        string choice;
+        do {
+            displayArray();
+            cout << "\nSelect a statistical calculation:\n";
+            cout << "1. Find Median\n";
+            cout << "2. Find Minimum\n";
+            cout << "3. Find Maximum\n";
+            cout << "4. Find Mean\n";
+            cout << "5. Find Summation\n";
+            cout << "6. Exit\n";
+            cout << "Enter your choice (1-6): ";
+            cin >> choice;
+
+            if(choice == "1") cout << "Median: " << findMedian() << endl;
+            else if(choice == "2") cout << "Minimum: " << findMin() << endl;
+            else if(choice == "3") cout << "Maximum: " << findMax() << endl;
+            else if(choice == "4") cout << "Mean: " << findMean() << endl;
+            else if(choice == "5") cout << "Summation: " << findSummation() << endl;
+            else if(choice =="6")  cout << "Exiting program...\n";
+            else cout << "Invalid choice! Please enter a valid option.\n";
+
+
+
+        } while (choice != "6");
+    }
+
+
 };
 
 
