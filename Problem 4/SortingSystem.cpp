@@ -57,7 +57,7 @@ string check_menu(const string& menuText ,const string choices[],int size ){
     while(true){
         cout << menuText ;
         if(isFile)
-            return nullptr;
+            return "";
         getline(cin, currentAnswer);
         if(currentAnswer.size() != 1 || find(choices,choices+size, currentAnswer) == choices+size)
             cout << "Try again !!\n\n" ;
@@ -69,7 +69,7 @@ string check_menu(const string& menuText ,const string choices[],int size ){
     return currentAnswer;
 }
 
-bool isDigit(string number){
+bool isDigit(const string& number){
 
     for(char digit :number)
         if(!isdigit(digit))
