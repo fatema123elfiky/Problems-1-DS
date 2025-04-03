@@ -1,38 +1,45 @@
 #include <bits\stdc++.h>
 using namespace std;
 
+// Class to represent a polynomial
 class Polynomial{
 private:
-    int *degrees;
-    int size;
+    int *degrees; // Array to store coefficients
+    int size;     // Size of the array
 
 public:
+    // Default constructor
     Polynomial()
     {
         size = 0;
         degrees = new int[size];
     }
+    // Constructor with size parameter
     Polynomial(int sz)
     {
         size = sz + 2;
         degrees = new int[size];
     }
+    // Destructor to free memory
     ~Polynomial()
     {
         delete [] degrees;
     }
+    // Method to input polynomial coefficients from user
     void inputDegrees()
     {
         cout << "Enter polynomial:\n";
         for (int i = 0; i < size; i++)
             cin >> degrees[i];
     }
+    // Method to input polynomial coefficients from file
     void inputDegrees(ifstream & file)
     {
         for (int i = 0; i < size; i++)
             file >> degrees[i];
     }
 
+    // Overload + operator for polynomial addition
     Polynomial operator+(const Polynomial& p)
     {
         Polynomial res(max(p.size,this->size)-2);
@@ -51,6 +58,7 @@ public:
         return res;
     }
 
+    // Overload - operator for polynomial subtraction
     Polynomial operator-(const Polynomial& p)
     {
         Polynomial res(max(p.size,this->size)-2);
@@ -69,6 +77,7 @@ public:
         return res;
     }
 
+    // Overload = operator for polynomial assignment
     Polynomial& operator=(const Polynomial& p)
     {
         delete [] this->degrees;
@@ -79,6 +88,7 @@ public:
         return *this;
     }
 
+    // Friend function to overload << for polynomial output
     friend ostream& operator<<(ostream &out , const Polynomial& p)
     {
         bool start = 0;
@@ -107,6 +117,7 @@ public:
     }
 };
 
+// Function for user input mode
 void user()
 {
     int ord1 , ord2;
@@ -126,6 +137,7 @@ void user()
     cout << "Difference of polynomials: " << p4 << '\n';
 }
 
+// Function for file input mode
 void file()
 {
     cout << "Enter testcases file name (without extension):\n";
@@ -155,6 +167,7 @@ void file()
     }
 }
 
+// Main function
 signed main()
 {
     char choice;

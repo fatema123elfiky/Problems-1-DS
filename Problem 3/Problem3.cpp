@@ -1,3 +1,18 @@
+/**
+ * @file Problem3.cpp
+ * @brief A sorted linked list implementation with basic operations such as insertion, deletion, and access.
+ *
+ * This class provides a sorted singly linked list where elements are inserted in ascending order, and nodes can be
+ * removed by index. It includes a destructor for clean-up and overloaded operators for easy access and display.
+ *
+ * @author Aly El-Deen Yasser Ali
+ * @id     20231109
+ *
+ * @version 1.5
+ * @date   2025-04-03
+ *
+ */
+
 #include <iostream>
 #include <fstream>
 
@@ -130,17 +145,15 @@ std::ostream& operator<<(std::ostream& os, const SortedLinkedList& list){
 }
 
 int SortedLinkedList::operator[](int index){
-    Node* currentNode = head;
-
     if(index < 0)
         throw std::invalid_argument("No Negative number | Index out of range");
 
+    Node* currentNode = head;
     for(int i = 0; i < index; i++){
         if(currentNode == nullptr)
             throw std::out_of_range("Index out of range.");
         currentNode = currentNode->next;
     }
-
     return currentNode->data;
 }
 
