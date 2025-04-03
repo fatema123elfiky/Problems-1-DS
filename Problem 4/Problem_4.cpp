@@ -787,4 +787,5 @@ int main(){
             break;
 
     }
+    cout<<"Thank you for using the sorting system! Goodbye!";
 }
