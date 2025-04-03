@@ -1,6 +1,9 @@
-//
-// Created by Fatma on 3/12/2025.
-//
+/**
+ * Problem_4 --> Sorting system
+ * Author    --> Fatema ElZhraa Ahmed Mohamed ElFiky
+ * ID        --> 20230280
+ * idea      --> implementing nine algorithms of sorting
+ **/
 
 
 #include <algorithm>
@@ -284,11 +287,11 @@ void SortingSystem<T>::measureSortTime(void (SortingSystem<T>::*sortFunc)(int, i
 template<typename T>
 void SortingSystem<T>::insertionSort() {
 
-    // iterating on each element to set it in right position
+    /**iterating on each element to set it in right position*/
     for (int index = 1,sub_index; index < size ; ++index) {
 
         T key=data[index];
-        // setting the key in the right position in the sorted subarray
+        /**setting the key in the right position in the sorted subarray*/
         for ( sub_index = index-1; sub_index >=0 ; --sub_index) {
             if(data[sub_index]>key)
                 data[sub_index+1]=data[sub_index];
@@ -308,12 +311,13 @@ template<typename T>
 void SortingSystem<T>::selectionSort() {
 
 
-    //iterating on each position and find the best value matches that position
+    /**iterating on each position and find the best value matches that position*/
     for (int index = 0,least; index < size; ++index) {
 
         least=index;
-         // getting the index of the least value in the second part of
-        // the array to set it in that position
+
+        /**getting the index of the least value in the second part of
+        the array to set it in that position*/
         for (int pointer = index+1; pointer < size ; ++pointer) {
             if(data[least]>data[pointer])
                 least=pointer;
@@ -331,6 +335,8 @@ void SortingSystem<T>::selectionSort() {
 template<typename T>
 void SortingSystem<T>::bubbleSort() {
 
+    /**it is about shuffling the numbers until it reaches the correct position.
+     as we shuffle every two adjacent elements.*/
     for (int index = 0; index < size-1; ++index) {
 
         for (int sub_index = 0; sub_index < size-index-1; ++sub_index) {
@@ -348,9 +354,13 @@ void SortingSystem<T>::bubbleSort() {
 template<typename T>
 void SortingSystem<T>::shellSort() {
 
+    /**dividing it into gaps by dividing two each time until it becomes 0 then stops*/
     for (int gap = size/2; gap > 0; gap/=2) {
 
         cout<<"After gap of size "<<gap<<" : ";
+
+       /** that loop responsible for iterating on each element to sort it in its gap
+        * we sort it by insertion and that way decreases the process of sorting by insertion at the end*/
         for (int index = gap; index < size ; ++index) {
 
             int gaped_index=index;
@@ -387,12 +397,16 @@ void SortingSystem<T>::merge(int left, int mid, int right) {
     T*part_1=new T[size_1];
     T*part_2=new T[size_2];
 
+    /**taking the left sorted part from the given subarray and the right sorted part
+     * from the given subarray and putting each of them in seperated array*/
     for (int index = left,index_2=0; index <= mid; ++index,index_2++)
         part_1[index_2]=data[index];
     for (int index = mid+1,index_2=0; index <= right; ++index,index_2++)
         part_2[index_2]=data[index];
 
 
+    /**sorting that subarray by iterating on the two sub-arrays of the subarray and insert
+     in the subarray by comparing the two sub-arrays*/
     int pointer_1=0,pointer_2=0,pointer=left;
     while (pointer_1<size_1 && pointer_2<size_2){
         if(part_1[pointer_1]<=part_2[pointer_2])
@@ -401,6 +415,7 @@ void SortingSystem<T>::merge(int left, int mid, int right) {
             data[pointer++]=part_2[pointer_2++];
     }
 
+    /**for inserting elements if there are some not inserted */
     while (pointer_1<size_1)
         data[pointer++]=part_1[pointer_1++];
     while (pointer_2<size_2)
@@ -447,6 +462,8 @@ int SortingSystem<T>::partition(int low, int high) {
     T pivot = data[low];
     int pointer_1=low;
 
+     /**after choosing the pivot separating the array into two ones in the same array one is less than the pivot
+     the other greater than te pivot and the quick sort divide from that pivot and organize that recursively*/
     for (int pointer_2 = low+1; pointer_2 <= high ; ++pointer_2)
         if(data[pointer_2]<pivot)
             swap(data[++pointer_1],data[pointer_2]);
@@ -460,7 +477,7 @@ int SortingSystem<T>::partition(int low, int high) {
 
 
 
-//Some revision and test !!
+
 template <typename T>
 void SortingSystem<T>::countSort() {
 
@@ -502,6 +519,7 @@ void SortingSystem<T>::radixSort() {
     // same idea of counting sort but extra external loop to sort according to digits
     for (int divisor = 1; max/divisor > 0 ; divisor*=10) {
 
+        // the idea about counting the repeating times of certain digit and accumulating that array
         cout<<"After sorting according to "<<divisor<<"th : ";
         for (int index = 0; index < 10; ++index)
             freq_array[index]=0;
@@ -512,6 +530,7 @@ void SortingSystem<T>::radixSort() {
         for (int index = 1; index < 10; ++index)
             freq_array[index]+=freq_array[index-1];
 
+        // positioning the elements sorted
         for (int index =size-1; index >=0 ; --index) {
             int digit= (data[index] / divisor) % 10 ;
             int new_position=--freq_array[digit];
@@ -532,6 +551,7 @@ void SortingSystem<T>::bucketSort() {
     T maxValue= *max_element(data,data+size);
     T minValue= *min_element(data,data+size);
 
+    // in case of equality , it is sorted and to avoid the zero case
     if(minValue==maxValue) {
         cout<<"It is already sorted\n";
         return;
@@ -541,35 +561,71 @@ void SortingSystem<T>::bucketSort() {
     int* counts = new int [size]();
 
     if constexpr (is_arithmetic<T>::value){
+
+        /**getting the bucket width as we do in stat to know width range as to make array of size 'size'
+         and fit that values which may be greater than the size itself*/
         if constexpr (is_integral<T>::value)
             Bucket_Width=  double(maxValue - minValue + 1) / size;
         else
             Bucket_Width=  double(maxValue - minValue) / size;
+
+
+        /**here we rescale the value itself according to the bucket width and the size of the bucket
+         we count also the number of occurrences of each value to know the allocated array for that value
+         in the bucket (it is about memory management)*/
         for (int pointer = 0; pointer < size; pointer++) {
             int index = min( (int) floor ((data[pointer] - minValue) / Bucket_Width) , size - 1);
             counts[index]++;
         }
+
     }
 
+    //we allocate here by the counts we calculated
     T** buckets = new T*[size];
     for (int index = 0; index < size; index++)
         buckets[index] = new T[counts[index]];
 
+    // resetting it as when we set values set them by increasing the pointer
+    // (they will play the role of pointers)
     for (int index = 0; index < size; index++)
         counts[index] = 0;
 
     if constexpr (is_arithmetic<T>::value) {
 
+        // assigning the values in the correct place in the buckets
         for (int pointer = 0; pointer < size; pointer++) {
             int index = min((int) floor((data[pointer] - minValue) / Bucket_Width), size - 1);
             buckets[index][counts[index]++] = data[pointer];
         }
     }
 
+    cout<<"Before sorting \n\n";
+    for (int index = 0; index < size; ++index) {
+        if(counts[index]){
+            cout<<"Bucket number : "<<index<<" contains --> ";
+            for (int pointer = 0; pointer < counts[index]-1; ++pointer)
+                cout<<buckets[index][pointer]<<", ";
+            cout<<buckets[index][counts[index]-1]<<'\n';
+        }
+    }
+
+    // sort that buckets
     for (int index = 0; index < size; index++)
         if (counts[index] > 0)
             sort(buckets[index], buckets[index] + counts[index]);
 
+
+    cout<<"After sorting \n\n";
+    for (int index = 0; index < size; ++index) {
+        if(counts[index]){
+            cout<<"Bucket number : "<<index<<" contains --> ";
+            for (int pointer = 0; pointer < counts[index]-1; ++pointer)
+                cout<<buckets[index][pointer]<<", ";
+            cout<<buckets[index][counts[index]-1]<<'\n';
+        }
+    }
+
+    // integrating the sorted buckets in the data array
     int position = 0;
     for (int index_row = 0; index_row < size; index_row++)
         for (int index_column = 0; index_column < counts[index_row]; index_column++)
@@ -580,6 +636,7 @@ void SortingSystem<T>::bucketSort() {
 
     delete[] buckets;
     delete[] counts;
+
 
 
 
